@@ -11,7 +11,8 @@ library(here)
 options(scipen = 999)
 ```
 
-## Tidyverse package
+
+# Tidyverse package
 * `tidyverse` package
 tidyverse package는 여러 개의 package로 구성되어 있습니다. 유용한 다양한 기능들이 있습니다. 
 ![](src/tidyverse_homepage.png)
@@ -19,8 +20,9 @@ tidyverse package는 여러 개의 package로 구성되어 있습니다. 유용�
 library(tidyverse)
 ```
 
-## Read data
-### Read CSV file
+
+## 1. Read data
+### 1-1. Read CSV file
 
   `readr::read_csv()`
   
@@ -30,6 +32,7 @@ library(tidyverse)
 patients <- readr::read_csv(here('data/raw/tutorial_patients.csv'))
 patients
 ```
+
 
 ### Tip) csv 문서가 깨지는 경우
 1. UTF-8로 다시 저장 - excel에서 새이름으로 저장 
@@ -50,7 +53,8 @@ readr::read_csv(file=here('data/raw/tutorial_patients_CP949.csv'))
 readr::read_csv(file=here('data/raw/tutorial_patients_CP949.csv'), locale = readr::locale(encoding = "EUC-KR"))
 ```
 
-### Read Excel File
+
+### 1-2. Read Excel File
   * `readxl::excel_sheets()`: 엑셀 파일에 포함된 spreadsheet의 종류 확인
   * `readxl::read_excel()`: 엑셀파일을 읽을 때 
 
@@ -59,6 +63,7 @@ library(readxl)
 readxl::excel_sheets(here('data/raw/tutorial_patients.xlsx'))
 readxl::read_excel(here('data/raw/tutorial_patients.xlsx'))
 ```
+
 
 ### Tip) 데이터를 복사 해서 R에 복사하는 방법(feat. datapasta)
 ![](src/datapasta.gif)
@@ -82,16 +87,18 @@ tibble::tribble(
 
 ```
 
-## Data Wrangling - **dplyr**, **tidyr** packages
+
+---
+## 2. Data Wrangling - **dplyr**, **tidyr** packages
 
 참고) `package::command`
 
-#### 원본 데이터
+### 원본 데이터
 ```{r}
 patients
 ```
 
-### **dplyr::select** 
+### 2-1. **dplyr::select** 
 * 원하는 column을 선택하거나 column의 이름을 바꾸는데 사용 
 ```{r}
 select(patients, subject_id, gender, anchor_age)
@@ -101,7 +108,7 @@ select(patients, subject_id, gender, anchor_age)
 select(patients, 등록번호=subject_id, 성별=gender, 나이=anchor_age)
 ```
 
-## **dplyr::filter**
+### 2-2. **dplyr::filter**
 * 조건을 걸어 열을 선택할 때 사용
 
 ```{r}
@@ -111,7 +118,7 @@ filter(patients, gender == 'M', anchor_age > 65)
 filter(patients, !is.na(dod))
 ```
 
-### **pipe %>%**
+### 2-3. **pipe %>%**
 * 명령어를 이어서 적용해주는 역할을 한다. 
 * 단축키: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>
 
@@ -121,7 +128,7 @@ patients %>%
   filter(gender == 'M', anchor_age > 65)
 ```
 
-### **dplyr::mutate()**
+### 2-4. **dplyr::mutate()**
 * 새로운 column을 만들거나 기존의 column을 변경시 사용
 * `ifelse(조건문, 조건문 만족시 반환값, 조건문 불만족시 반환값)`
 
@@ -129,9 +136,10 @@ patients %>%
 patients %>% mutate(gender = ifelse(gender == 'M', 'Male', 'Female'))
 ```
 
-### Combine >= 2 tables
+----
 
-#### dplyr::bind_rows / dplyr::bind_cols
+### 2-5. Combine multiple tables
+#### 2-5-1. dplyr::bind_rows / dplyr::bind_cols
 * table과 table을 합칠때.
   - 세로로 합칠 때는 `bind_rows`
   - 가로로 합칠 때는 `bind_cols`
@@ -173,7 +181,7 @@ for (f in filenames){
 result
 ```
 
-#### dplyr::join
+#### 2-5-2. dplyr::join
 * key를 기준으로 두 테이블을 합친다. 
 ![](src/join_diagrams.png)
 ```{r}
@@ -186,7 +194,7 @@ patients
 icustays %>% left_join(patients, by = 'subject_id')
 ```
 
-#### dplyr::arrange
+### 2-6. dplyr::arrange()
 
 * column 순서대로 정렬
 
@@ -195,8 +203,8 @@ patients %>% head(10) %>% arrange(anchor_age)
 patients %>% head(10) %>% arrange(desc(anchor_age))
 ```
 
-#### dplyr::group_by / dplyr::summarize
-
+### dplyr::group_by() / dplyr::summarize()
+![](src/dplyr_groupby.png)
 ```{r}
 icustays %>% 
   left_join(patients, by = 'subject_id') %>% 
@@ -216,10 +224,11 @@ icustays %>%
             age_sd = sd(anchor_age))
 ```
 
-#### tidyr::pivot_wider
-
+### tidyr::pivot_wider() / tidyr::pivor_longer()
+![](src/tidyr_pivot.png)
 ```{r}
 labevents <- readr::read_csv(here('data/raw/tutorial_labevents.csv'))
+labevents
 ```
 
 ```{r}
@@ -227,26 +236,75 @@ labs <- icustays %>%
   left_join(labevents) %>% 
   group_by(label) %>% 
   filter(charttime == min(charttime)) %>% 
-  select(ends_with('id'), label, value, charttime, intime, outtime) %>% 
-  pivot_wider(id_cols = c('subject_id', 'hadm_id', 'stay_id'), names_from = label) 
-  
-colnames(labs)
-labs %>% select(ends_with('id'), 
-                `White Blood Cells`, 
-                `Red Blood Cells`, 
-                `Platelet Count`, 
-                `Alanine Aminotransferase (ALT)`,
-                `Asparate Aminotransferase (AST)`,
-                Creatinine,
-                Sodium,
-                Potassium,
-                Chloride,
-                Bicarbonate)
+  select(ends_with('id'), label, value, charttime, intime, outtime)
+labs
 ```
 
-#### tidyr::pivor_longer()
 ```{r}
+labs %>% 
+  pivot_wider(id_cols = c('subject_id', 'hadm_id', 'stay_id'), names_from = label) %>% 
+  select(ends_with('id'), 
+        `White Blood Cells`, 
+        `Red Blood Cells`, 
+        `Platelet Count`, 
+        `Alanine Aminotransferase (ALT)`,
+        `Asparate Aminotransferase (AST)`,
+        Creatinine,
+        Sodium,
+        Potassium,
+        Chloride,
+        Bicarbonate)
+```
 
+## Mortality 영향을 미치는 요인
+```{r}
+patients <- readr::read_csv(here('data/raw/tutorial_patients.csv'))
+icustays <- readr::read_csv(here('data/raw/tutorial_icustays.csv'))
+labevents <- readr::read_csv(here('data/raw/tutorial_labevents.csv'))
+chartevents <- readr::read_csv(here('data/raw/tutorial_chartevents.csv'))
+
+demographic_table <- icustays %>% 
+  left_join(patients, by = 'subject_id') %>% 
+  mutate(death = ifelse(!is.na(dod), 1, 0))
+
+lab_table <- icustays %>% 
+  left_join(labevents, by = c('subject_id', 'hadm_id')) %>% 
+  group_by(subject_id, hadm_id, label) %>% 
+  filter(charttime == min(charttime)) %>%
+  pivot_wider(id_cols = c('subject_id', 'hadm_id', 'stay_id'), names_from = label) %>% 
+  select(ends_with('id'), 
+        `White Blood Cells`, 
+        `Red Blood Cells`, 
+        `Platelet Count`, 
+        `Alanine Aminotransferase (ALT)`,
+        `Asparate Aminotransferase (AST)`,
+        Creatinine,
+        Sodium,
+        Potassium,
+        Chloride,
+        Bicarbonate)
+
+vital_table <- icustays %>% 
+  left_join(chartevents, by = c('subject_id', 'hadm_id', 'stay_id')) %>% 
+  group_by(subject_id, hadm_id, stay_id, label) %>% 
+  filter(charttime == min(charttime), !is.na(value)) %>%
+  pivot_wider(id_cols = c('subject_id', 'hadm_id', 'stay_id'), names_from = label) %>% 
+  select(ends_with('id'),
+         `Non Invasive Blood Pressure systolic`,
+         `Non Invasive Blood Pressure diastolic`,
+         `Heart Rate`,
+         `Respiratory Rate`,
+         `Temperature Fahrenheit`,
+         `Temperature Celsius`,
+         `O2 saturation pulseoxymetry`
+         )
+
+result_table <- demographic_table %>% 
+  right_join(vital_table, by = c('subject_id', 'hadm_id', 'stay_id')) %>% 
+  right_join(lab_table, by = c('subject_id', 'hadm_id'))
+
+result_table
+write.csv(result_table, file=here('data/processed/result_table.csv'), row.names = FALSE)
 ```
 
 

@@ -5,39 +5,114 @@ date: "2021-04-09"
 output: html_document
 ---
 
-## Visualization - `ggplot`
-#### ggplot2 
-```{r}
+## Visualization - **ggplot2** package
+```{r include = FALSE}
+# Libraries
 library(tidyverse)
+library(here)
+
+# Read table
+table <- readr::read_csv(here('data/processed/result_table.csv'))
 ```
 
-  * 기본적인 그래프 그리기 (group 별로 그리는 것 포함)
-  * order - factor 변경 하기 
-  * x axis, y axis title
-  * figure title
-  * `facet_grid `
-  
-#### cowplot::plot_grid()
+### ggplot2 
+#### 기본적인 그래프 그리기 (group 별로 그리는 것 포함)
+* scatter plot: `geom_point()`
+* histogram plot: `geom_point()`
+* line plot: `geom_line()`
+* bar plot: `geom_bar()`
+
+#### Scatter plot
 ```{r}
-library(cow_plot)
-cow_plot::plot_grid(p1, p2, labels = c('A', 'B'))
+table %>% 
+  ggplot(aes(x = `Heart Rate`, y = `Non Invasive Blood Pressure systolic`)) + geom_point()
+```
+
+
+#### Scatter plot + linear regression 
+```{r}
+table %>% 
+  ggplot(aes(x = `Heart Rate`, y = `Non Invasive Blood Pressure systolic`)) +
+  geom_point() + 
+  geom_smooth(method = lm, se = FALSE)
+
+```
+
+#### Histogram
+```{r}
+table %>% 
+  ggplot(aes(`Non Invasive Blood Pressure systolic`)) + geom_histogram()
+```
+
+
+#### Histogram 2
+```{r}
+histogram2_data_wider <- table %>% 
+  select(`Non Invasive Blood Pressure systolic`, `Non Invasive Blood Pressure diastolic`) 
+
+histogram2_data_longer <- histogram2_data_wider %>% 
+  pivot_longer(cols = c(`Non Invasive Blood Pressure systolic`, `Non Invasive Blood Pressure diastolic`), names_to = 'label', values_to = 'value')
+
+histogram2_data_wider
+histogram2_data_longer
+
+histogram2_data_longer %>% 
+  ggplot(aes(x = value, fill = label)) + geom_histogram(alpha = 0.3)
+  
+```
+
+#### box plot, jitter plot
+```{r}
+histogram2_data_longer %>% 
+  ggplot(aes(y = value, x = label)) + geom_boxplot()
+```
+```{r}
+histogram2_data_longer %>% 
+  ggplot(aes(y = value, x = label)) + geom_boxplot() + geom_jitter()
+```
+
+#### draw multiple graphs - facet_wrap / cowplot::plot_grid()
+
+* facet_wrap
+```{r}
+table %>% 
+  select(death, `White Blood Cells`, `Platelet Count`, `Creatinine`) %>% 
+  pivot_longer(cols = c(`White Blood Cells`, `Platelet Count`, `Creatinine`), names_to = 'label', values_to = 'value') %>% 
+  ggplot(aes(x = as.factor(death), y = value)) + geom_boxplot() + facet_wrap(label~., scales = 'free_y') + 
+  xlab('Death') + 
+  theme(axis.title.y = element_blank())
+  
+```
+
+  
+* cowplot::plot_grid()
+```{r}
+library(cowplot)
+p_creatinine <- table %>% select(death, Creatinine) %>% ggplot(aes(x = as.factor(death), y = Creatinine)) + geom_boxplot() + xlab('Death')
+p_platelet <- table %>% select(death, `Platelet Count`) %>% ggplot(aes(x = as.factor(death), y = `Platelet Count`)) + geom_boxplot()+ xlab('Death')
+p_wbc <- table %>% select(death, `White Blood Cells`) %>% ggplot(aes(x = as.factor(death), y = `White Blood Cells`)) + geom_boxplot()+ xlab('Death')
+p_all <- cowplot::plot_grid(p_creatinine, p_platelet, p_wbc, labels = c('A', 'B', 'C'), nrow = 1)
+p_all
 ```
 
 #### ggplot2::ggsave()
-* plot을 파일로 저장하는 방법
+* plot을 파일로 저장
+
 * figure types 
 
 ![](src/vector-vs-bitmap3-1-1.png)
+
   + vector line으로 이루어져 있음 
     - PDF
     - EPS
     - AI (adobe illustrator)
-  + bitmap: dot로 이루어져 있음. 
+
+  + bitmap: dot로 이루어져 있음. (dpi 필요)
     - tiff
     - png
     - jpg
 
 ```{r}
-ggsave("example.pdf", width = 15, height = 20, units = "cm") ## pdf로 저장
-ggsave("example.tiff", final_plot, dpi = 300, width = 15, height = 20, units = "cm") ## tiff로 저장 
+ggsave(here("figure/figure_all.pdf"), p_all, width = 20, height = 15, units = "cm") ## pdf로 저장
+ggsave(here("figure/figure_all.tiff"), p_all, dpi = 300, width = 20, height = 15, units = "cm") ## tiff로 저장 
 ```
