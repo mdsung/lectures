@@ -1,0 +1,34 @@
+---
+title: "Pre-requisite for R tutorial"
+author: "MinDong Sung"
+date: "4/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Lecture Notes
+* 강의자료 및 참고자료: [github.com/mdsung/2021_TBD_R_tutorial](github.com/mdsung/2021_TBD_R_tutorial)
+
+## Install R
+[R](https://cran.r-project.org/src/base/R-4/) 
+[R](src/r_windows_install.png)
+가장 최신 버전인 R-4.0.5 version을 다운받아서 설치를 합니다. 
+
+## Install Rstudio
+[Rstudio](https://www.rstudio.com/products/rstudio/download/)
+![Rstudio](src/rstudio_windows_install.png)
+* **RStudio Desktop**을 설치하면 됩니다. 
+
+## pre-requisite packages
+```{r}
+install.packages('renv')
+library(renv)
+renv::restore()
+```
+
+## code 실행 방법
+1. Open file with `Rstudio`
+2. code chunk 위에 있는 초록색 화살표를 누르거나, ctrl + shift + enter를 누른다. 

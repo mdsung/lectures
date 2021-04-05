@@ -1,0 +1,89 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r include=FALSE}
+library(tidyverse)
+library(DBI)
+library(RMariaDB)
+library(glue)
+library(dbplyr)
+```
+
+# MYSQL CONNECTION
+```{r}
+con <- DBI::dbConnect(RMariaDB::MariaDB(),
+                      host   = "103.22.220.153",
+                      # UID      = rstudioapi::askForPassword("Database user"),
+                      # PWD      = rstudioapi::askForPassword("Database password"),
+                      user = 'root',
+                      password = 'yonsei2020!',
+                      port     = 13306, 
+                      dbname = 'mimiciv')
+```
+
+```{r}
+sql_for_icustays <- glue_sql("SELECT * \\
+FROM ( \\
+    SELECT i.subject_id, i.hadm_id, i.stay_id, i.first_careunit, i.intime, i.outtime, i.los, p.gender, p.anchor_age, p.anchor_year, p.dod \\
+	FROM icustays i \\
+	LEFT JOIN patients p \\
+	ON p.subject_id = i.subject_id \\
+		AND (i.first_careunit IN ('Coronary Care Unit (CCU)', 'Medical Intensive Care Unit (MICU)', 'Medical/Surgical Intensive Care Unit (MICU/SICU)'))) m \\
+WHERE gender IS NOT NULL")
+	
+sql_for_icustays
+
+rs <- DBI::dbSendQuery(con, sql_for_icustays)
+icu_stays <- dbFetch(rs)
+icu_stays
+```
+
+```{sql}
+CREATE VIEW tutorial_icustays AS
+SELECT *
+FROM (
+    SELECT i.subject_id, i.hadm_id, i.stay_id, i.first_careunit, i.intime, i.outtime, i.los, p.gender, p.anchor_age, p.anchor_year, p.dod
+	FROM icustays i
+	LEFT JOIN patients p
+	ON p.subject_id = i.subject_id
+		AND (i.first_careunit IN ('Coronary Care Unit (CCU)', 'Medical Intensive Care Unit (MICU)', 'Medical/Surgical Intensive Care Unit (MICU/SICU)'))) m
+WHERE gender IS NOT NULL
+```
+
+```{r}
+con %>% tbl(in_schema('mimiciv', 'd_items')) %>% filter(label %IN% 'Heart Rate') %>% show_query()
+```
+
+## VITAL SIGNS - chartevents.csv
+* 220210 systolic BP
+* 220210 diastolic BP
+* 220210 Respiratory Rate
+* 220045 Heart Rate
+* 223762 Temperature
+* 220277 Saturation
+
+## Lab - labevents.csv
+* 51301 White blood cells
+* 51279 Red blood cells
+* 51222 Hemoglobin
+* 51221 Hematocrit
+* 51265 Platelet Count
+
+* 50878 AST
+* 50861 ALT
+* 51006 BUN
+* 50912 Creatinine
+
+* 50983 Na(Sodium)
+* 50971 K(Potassium)
+* 50902 Cl(Chloride)
+* 50882 HCO3(bicarbonate)
+
+## ABGA - labevents.csv
+* 50820 pH
+* 51265 pO2
+* 50818 pco2
+
+
+

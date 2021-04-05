@@ -1,0 +1,132 @@
+---
+title: "Tidyverse package with R"
+author: "MinDong Sung M.D."
+date: "4/9/2021"
+output: 
+  powerpoint_presentation: default
+  html_doument: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R environment setting
+* 설치되어 있다는 가정을 하고 진행합니다. 설치 방법은 [prerequisite]() 파일을 참고하시면 됩니다. 
+* Rstudio: Integrated Development Environment (IDE) 통합 개발 환경으로 R에 특화된 (최근에는 python도 지원) 개발도구 
+
+## R studio
+* Rstudio 화면구성
+  기본적으로 Rstudio는 4개의 창(pane)으로 구성되어 있다. 
+    1. **Source** - 대부분 code나 notebook을 띄우는 창
+    2. **Console** - 실제 명령어가 실행되는 창
+    3. **Environment** - 현재 메모리에서 사용하고 있는 변수, 함수 등을 보여주는 창
+    4. **Files / Plot / View / Help** - 현재 폴더의 파일, 그림, 결과물, 도움말 등을 확인할 수 있는 창
+    
+![](src/rstudio_desktop.png)
+* Rstudio 생성 파일 종류
+![](src/rstudio_menu.png)
+* Rstudio pane 구성
+![](src/rstudio_pane.png)
+* Rstudio project 관리
+![](src/rstudio_project.png)
+
+## (Tip) R notebook or R markdown
+
+* R notebook/markdown은 R로 문서 형태로 만들 수 있다. 
+  + 분석 결과를 다시 보기 위해서 코드를 다시 실행시킬 필요가 없다
+  + 쉽게 문서 파일로 만들 수 있다
+  
+* Start: File > New File > R Notebook or R Markdown
+* Insert code chunk: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd>
+* Execute code chunk: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> 
+* Render / Save Notebook file : <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> 
+
+![rnotebook](src/rstudio_notebook_example.png)
+
+## R project 설정
+### R poject 시작
+* project와 관련된 code와 source들을 한꺼번에 관리할 수 있다. 
+
+### (TIP) path의 설정: here package 
+* 상대경로 -> 절대경로 
+* here은 현재 Rproj의 위치를 기준으로 절대경로를 반환한다 
+
+```{r}
+library(here)
+here('data')
+```
+
+## Tidyverse package
+* `tidyverse` package
+tidyverse package는 여러 개의 package로 구성되어 있습니다. 유용한 다양한 기능들이 있습니다. 
+
+```{r}
+library(tidyverse)
+```
+
+## Read data
+### **csv** 파일을 읽기
+  readr::read_csv()
+  - 처음 1000개의 열로 데이터의 형태를 유추해서 추출한다. 
+  - 따라서, 에러가 나는 경우는 column type을 정해줘야 한다. 
+```{r}
+patients <- readr::read_csv(here('data/raw/patients.csv'))
+```
+
+### Tip) csv 문서가 깨지는 경우
+1. UTF-8로 다시 저장 - excel에서 새이름으로 저장 
+2. encoding 바꿔서 불러들이기 
+  * 기존: utf-8
+  * 변경: CP949 or EUC-KR
+```{r}
+readr::read_csv(file="data/raw/patient_cp949.csv", locale = readr::locale(encoding = "UTF-8"))
+```
+
+### **xlsx** 파일을 읽기
+  readxl::excel_sheets()
+  readxl::read_excel() 
+
+```{r}
+library(readxl)
+patients <- readxl::read_excel(here('data/raw/patients.xlsx'))
+```
+
+### Tip) 데이터를 복사 해서 R에 복사하는 방법(feat. datapasta)
+![](src/datapasta.gif)
+```{r}
+library(datapasta)
+```
+
+## Datawrangling - **dplyr**, **tidyr** packages
+* select - selection by column
+* filter - selection by row
+* pipe %>%
+
+* mutate()
+* combine 2 tables
+  + join 
+  + bind_rows
+  + bind_cols
+
+* arrange
+* groupby
+* summarize
+
+* pivot_wider
+* pivor_longer
+
+## Visualization - `ggplot`
+* ggplot2 
+  - 기본적인 그래프 그리기 (group 별로 그리는 것 포함)
+  - theme()
+  - 
+* colorbrewer2 homepage
+* cowplot - plot 합치기
+* plot save - 300dpi
+  - figure 종류 - vector / bitmap
+  - pdf로 저장
+  
+## Tableone - `tableone`
+
+
