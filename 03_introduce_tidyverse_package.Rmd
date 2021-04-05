@@ -1,0 +1,82 @@
+---
+title: "03_tidyverse_package"
+author: "MinDong Sung"
+date: "4/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tidyverse package
+* `tidyverse` package
+tidyverse package는 여러 개의 package로 구성되어 있습니다. 유용한 다양한 기능들이 있습니다. 
+
+```{r}
+library(tidyverse)
+```
+
+## Read data
+### **csv** 파일을 읽기
+  readr::read_csv()
+  - 처음 1000개의 열로 데이터의 형태를 유추해서 추출한다. 
+  - 따라서, 에러가 나는 경우는 column type을 정해줘야 한다. 
+```{r}
+patients <- readr::read_csv(here('data/raw/patients.csv'))
+```
+
+### Tip) csv 문서가 깨지는 경우
+1. UTF-8로 다시 저장 - excel에서 새이름으로 저장 
+2. encoding 바꿔서 불러들이기 
+  * 기존: utf-8
+  * 변경: CP949 or EUC-KR
+```{r}
+readr::read_csv(file="data/raw/patient_cp949.csv", locale = readr::locale(encoding = "UTF-8"))
+```
+
+### **xlsx** 파일을 읽기
+  readxl::excel_sheets()
+  readxl::read_excel() 
+
+```{r}
+library(readxl)
+patients <- readxl::read_excel(here('data/raw/patients.xlsx'))
+```
+
+### Tip) 데이터를 복사 해서 R에 복사하는 방법(feat. datapasta)
+![](src/datapasta.gif)
+```{r}
+library(datapasta)
+```
+
+## Datawrangling - **dplyr**, **tidyr** packages
+* select - selection by column
+* filter - selection by row
+* pipe %>%
+
+* mutate()
+* combine 2 tables
+  + join 
+  + bind_rows
+  + bind_cols
+
+* arrange
+* groupby
+* summarize
+
+* pivot_wider
+* pivor_longer
+
+## Visualization - `ggplot`
+* ggplot2 
+  - 기본적인 그래프 그리기 (group 별로 그리는 것 포함)
+  - theme()
+  - 
+* colorbrewer2 homepage
+* cowplot - plot 합치기
+* plot save - 300dpi
+  - figure 종류 - vector / bitmap
+  - pdf로 저장
+  
+## Tableone - `tableone`

@@ -1,7 +1,7 @@
 ---
 title: "01_Introduce MIMIC IV data"
 author: "MinDong Sung"
-date: "4/5/2021"
+date: "2021-04-09"
 output: html_document
 ---
 
@@ -9,22 +9,32 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## MIMIC IV
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+![](src/mimiciv_homepage.png)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+* **Core**: 
+  The core module contains patient tracking data. Demographics, hospital admissions, and in-hospital ward transfers are described here.
 
-```{r cars}
-summary(cars)
-```
+* **Hosp**:
+  The Hosp module provides all data acquired from the hospital wide electronic health record. Information covered includes laboratory measurements, microbiology, medication administration, and billed diagnoses.
 
-## Including Plots
+* **ICU**:
+  The ICU module contains information collected from the clinical information system used within the ICU. Documented data includes intravenous administrations, ventilator settings, and other charted items.
 
-You can also embed plots, for example:
+* **CXR**:
+  The CXR module provides lookup tables linking patient identifiers with MIMIC-CXR study_id and dicom_id, allowing analysis of patient chest x-rays with the associated clinical data.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+## Access to MIMIC IV
+Researchers seeking to use the database must:
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+1. Become a credentialed user on PhysioNet. This involves completion of a training course in human subjects research.
+2. Sign the data use agreement (DUA) for MIMIC-IV. Adherence to the terms of the DUA is paramount.
+3. Follow the tutorials for direct cloud access (recommended), or download the data locally.
+
+## Download MIMIC dataset 
+![](src/mimiciv_download.png)
+
+## References
+* [https://mimic-iv.mit.edu/docs/](https://mimic-iv.mit.edu/docs/)
+* [https://physionet.org/content/mimiciv/1.0/](https://physionet.org/content/mimiciv/1.0/)
