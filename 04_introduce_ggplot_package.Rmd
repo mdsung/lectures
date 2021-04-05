@@ -1,0 +1,43 @@
+---
+title: "04_ggplot_package"
+author: "MinDong Sung"
+date: "2021-04-09"
+output: html_document
+---
+
+## Visualization - `ggplot`
+#### ggplot2 
+```{r}
+library(tidyverse)
+```
+
+  * 기본적인 그래프 그리기 (group 별로 그리는 것 포함)
+  * order - factor 변경 하기 
+  * x axis, y axis title
+  * figure title
+  * `facet_grid `
+  
+#### cowplot::plot_grid()
+```{r}
+library(cow_plot)
+cow_plot::plot_grid(p1, p2, labels = c('A', 'B'))
+```
+
+#### ggplot2::ggsave()
+* plot을 파일로 저장하는 방법
+* figure types 
+
+![](src/vector-vs-bitmap3-1-1.png)
+  + vector line으로 이루어져 있음 
+    - PDF
+    - EPS
+    - AI (adobe illustrator)
+  + bitmap: dot로 이루어져 있음. 
+    - tiff
+    - png
+    - jpg
+
+```{r}
+ggsave("example.pdf", width = 15, height = 20, units = "cm") ## pdf로 저장
+ggsave("example.tiff", final_plot, dpi = 300, width = 15, height = 20, units = "cm") ## tiff로 저장 
+```

@@ -2,9 +2,7 @@
 title: "02_Introduce_R_studio"
 author: "MinDong Sung M.D."
 date: "4/9/2021"
-output: 
-  powerpoint_presentation: default
-  html_doument: default
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -12,22 +10,26 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## R environment setting
-* 설치되어 있다는 가정을 하고 진행합니다. 설치 방법은 [prerequisite]() 파일을 참고하시면 됩니다. 
+* 설치 방법은 [prerequisite](00_pre_requisite.html) 파일을 참고하시면 됩니다. 
 * Rstudio: Integrated Development Environment (IDE) 통합 개발 환경으로 R에 특화된 (최근에는 python도 지원) 개발도구 
 
 ## R studio
 * Rstudio 화면구성
+
   기본적으로 Rstudio는 4개의 창(pane)으로 구성되어 있다. 
     1. **Source** - 대부분 code나 notebook을 띄우는 창
     2. **Console** - 실제 명령어가 실행되는 창
     3. **Environment** - 현재 메모리에서 사용하고 있는 변수, 함수 등을 보여주는 창
     4. **Files / Plot / View / Help** - 현재 폴더의 파일, 그림, 결과물, 도움말 등을 확인할 수 있는 창
     
-![](src/rstudio_desktop.png)
+  ![](src/rstudio_desktop.png)
+
 * Rstudio 생성 파일 종류
 ![](src/rstudio_menu.png)
+
 * Rstudio pane 구성
 ![](src/rstudio_pane.png)
+
 * Rstudio project 관리
 ![](src/rstudio_project.png)
 
@@ -42,7 +44,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * Execute code chunk: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd> 
 * Render / Save Notebook file : <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> 
 
-![rnotebook](src/rstudio_notebook_example.png)
+![](src/rstudio_notebook_example.png)
 
 ## R project 설정
 ### R poject 시작
@@ -52,9 +54,9 @@ knitr::opts_chunk$set(echo = TRUE)
 * 상대경로 -> 절대경로 
 * here은 현재 Rproj의 위치를 기준으로 절대경로를 반환한다 
 
-```{r}
+```{r message=F}
 library(here)
-here('data')
+here('data/raw')
 ```
 
 
