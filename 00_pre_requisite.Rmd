@@ -11,24 +11,32 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Lecture Notes
 * 강의자료 및 참고자료: [github.com/mdsung/2021_TBD_R_tutorial](github.com/mdsung/2021_TBD_R_tutorial)
+![R](src/github_download.png)
 
 ## Install R
 [R](https://cran.r-project.org/src/base/R-4/) 
-[R](src/r_windows_install.png)
+![R](src/r_install_windows_1.png)
 가장 최신 버전인 R-4.0.5 version을 다운받아서 설치를 합니다. 
 
 ## Install Rstudio
 [Rstudio](https://www.rstudio.com/products/rstudio/download/)
-![Rstudio](src/rstudio_windows_install.png)
+![Rstudio](src/rstudio_windows_1.png)
 * **RStudio Desktop**을 설치하면 됩니다. 
 
 ## pre-requisite packages
-```{r}
-install.packages('renv')
+```{r echo=T, message=F}
 library(renv)
 renv::restore()
 ```
 
-## code 실행 방법
-1. Open file with `Rstudio`
-2. code chunk 위에 있는 초록색 화살표를 누르거나, ctrl + shift + enter를 누른다. 
+## 실습 준비 방법
+1. github에서 zip 파일을 다운로드 받는다.
+2. 원하는 폴더에 압축을 푼다. 
+3. 푼 압축 파일에서 '2021_TRD_R_tutorial.Rproj'를 더블 클릭한다. 
+4. Rstudio가 열린다. 
+5. 다음 명령어를 실행시킨다. 
+```{r}
+library(renv)
+renv::restore()
+```
+6. code chunk 위에 있는 초록색 화살표를 누르거나, <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>enter</kbd>를 누른다. 
