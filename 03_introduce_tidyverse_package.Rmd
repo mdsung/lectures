@@ -89,6 +89,7 @@ tibble::tribble(
 
 
 ---
+
 ## 2. Data Wrangling - **dplyr**, **tidyr** packages
 
 참고) `package::command`
@@ -181,8 +182,11 @@ for (f in filenames){
 result
 ```
 
+
 #### 2-5-2. dplyr::join
+
 * key를 기준으로 두 테이블을 합친다. 
+
 ![](src/join_diagrams.png)
 ```{r}
 icustays <- readr::read_csv(here('data/raw/tutorial_icustays.csv'))
@@ -194,6 +198,7 @@ patients
 icustays %>% left_join(patients, by = 'subject_id')
 ```
 
+
 ### 2-6. dplyr::arrange()
 
 * column 순서대로 정렬
@@ -203,7 +208,7 @@ patients %>% head(10) %>% arrange(anchor_age)
 patients %>% head(10) %>% arrange(desc(anchor_age))
 ```
 
-### dplyr::group_by() / dplyr::summarize()
+### 2-7. dplyr::group_by() / dplyr::summarize()
 ![](src/dplyr_groupby.png)
 ```{r}
 icustays %>% 
@@ -224,7 +229,7 @@ icustays %>%
             age_sd = sd(anchor_age))
 ```
 
-### tidyr::pivot_wider() / tidyr::pivor_longer()
+### 2-8. tidyr::pivot_wider() / tidyr::pivor_longer()
 ![](src/tidyr_pivot.png)
 ```{r}
 labevents <- readr::read_csv(here('data/raw/tutorial_labevents.csv'))
@@ -256,7 +261,7 @@ labs %>%
         Bicarbonate)
 ```
 
-## Mortality 영향을 미치는 요인
+## 분석 예시) Mortality 영향을 미치는 요인
 ```{r}
 patients <- readr::read_csv(here('data/raw/tutorial_patients.csv'))
 icustays <- readr::read_csv(here('data/raw/tutorial_icustays.csv'))
