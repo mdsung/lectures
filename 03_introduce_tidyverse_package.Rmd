@@ -28,11 +28,17 @@ library(tidyverse)
   
   - 처음 1000개의 열로 데이터의 형태를 유추해서 추출한다. 
   - 따라서, 에러가 나는 경우는 column type을 정해줘야 한다. 
+  
 ```{r}
 patients <- readr::read_csv(here('data/raw/tutorial_patients.csv'))
 patients
 ```
 
+```{r}
+patients <- readr::read_csv(here('data/raw/tutorial_patients.csv'),
+                            col_types = cols(dod = col_date(format = "%Y.%m.%d")))
+patients
+```
 
 ### Tip) csv 문서가 깨지는 경우
 1. UTF-8로 다시 저장 - excel에서 새이름으로 저장 
@@ -153,6 +159,15 @@ patients %>% mutate(death = ifelse(!is.na(dod), 'Death', 'Alive'))
   - 세로로 합칠 때는 `bind_rows`
   - 가로로 합칠 때는 `bind_cols`
   
+```{r message = FALSE}
+table1 <- readr::read_csv(here('data/raw/tutorial_patient1.csv'))
+table2 <- readr::read_csv(here('data/raw/tutorial_patient2.csv'))
+table3 <- readr::read_csv(here('data/raw/tutorial_patient3.csv'))
+table4 <- readr::read_csv(here('data/raw/tutorial_patient4.csv'))
+result <- bind_rows(table1, table2, table3, table4)
+result
+```
+
 * for (변수 in 리스트){}
 ```{r}
 for (i in c(1, 2, 3)){
@@ -168,17 +183,9 @@ year = '2021'
 
 glue('Here we in {name} {year}')
 ```
-```{r message = FALSE}
-table1 <- readr::read_csv(here('data/raw/tutorial_patient1.csv'))
-table2 <- readr::read_csv(here('data/raw/tutorial_patient2.csv'))
-table3 <- readr::read_csv(here('data/raw/tutorial_patient3.csv'))
-table4 <- readr::read_csv(here('data/raw/tutorial_patient4.csv'))
-result <- bind_rows(table1, table2, table3, table4)
-result
-```
 
 ```{r}
-filenames = c('tutorial_patient1.csv', 'tutorial_patient2.csv', 'tutorial_patient3.csv', 'tutorial_patient4.csv')
+filenames = list.files(path=here('data/raw/'), pattern = "tutorial_patient[0-9]{1}.csv$")
 
 result = tibble()
 for (f in filenames){
@@ -269,7 +276,7 @@ labs %>%
         Bicarbonate)
 ```
 
-## 분석 예시) Mortality 영향을 미치는 요인
+## 분석 예시) ICU 입실 후 최근 vital sign과 lab을 Mortality에 따른 비교
 ```{r}
 patients <- readr::read_csv(here('data/raw/tutorial_patients.csv'))
 icustays <- readr::read_csv(here('data/raw/tutorial_icustays.csv'))
@@ -318,6 +325,35 @@ result_table <- demographic_table %>%
 
 result_table
 write.csv(result_table, file=here('data/processed/result_table.csv'), row.names = FALSE)
+
+library(tableone)
+tableone_vars <- c("gender", 
+                  "anchor_age", 
+                  "first_careunit", 
+                  "los", 
+                  "Non Invasive Blood Pressure systolic",
+                  "Non Invasive Blood Pressure diastolic",
+                  "Heart Rate",
+                  "Respiratory Rate",
+                  "Temperature Fahrenheit",
+                  "Temperature Celsius",
+                  "O2 saturation pulseoxymetry",
+                  "White Blood Cells", 
+                  "Red Blood Cells", 
+                  "Platelet Count", 
+                  "Alanine Aminotransferase (ALT)",
+                  "Asparate Aminotransferase (AST)",
+                  "Creatinine",
+                  "Sodium",
+                  "Potassium",
+                  "Chloride",
+                  "Bicarbonate")
+tableOne <- CreateTableOne(vars = tableone_vars, 
+                           strata = c("death"), 
+                           data = result_table,
+                           factorVars = c("first_careunit"))
+
+write.csv(print(tableOne), file=here("data/processed/table1.csv"))
 ```
 
 

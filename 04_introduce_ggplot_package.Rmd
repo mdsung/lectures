@@ -148,6 +148,7 @@ p_all
     - jpg
 
 ```{r}
+ggsave(here("figure/figure_all.eps"), p_all, width = 20, height = 15, units = "cm") ## pdf로 저장
 ggsave(here("figure/figure_all.pdf"), p_all, width = 20, height = 15, units = "cm") ## pdf로 저장
 ggsave(here("figure/figure_all.tiff"), p_all, dpi = 300, width = 20, height = 15, units = "cm") ## tiff로 저장 
 ```
