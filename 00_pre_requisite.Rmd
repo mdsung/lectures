@@ -60,7 +60,10 @@ renv::restore()
 
 ## pre-requisite packages
 
+-   `renv::restore()` 를 실행시키신 경우에는 따로 다음 명령어를 실행시키실 필요는 없습니다.
+
 ```{r eval=FALSE}
+
 install.packages(c('renv', 'rmarkdown', 'knitr'))
 install.packages(c('tidyverse', 'tableone', 'ggsignif','cowplot', 'here', 'glue', 'datapasta'))
 ```
