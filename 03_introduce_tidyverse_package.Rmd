@@ -58,6 +58,7 @@ readr::read_csv(file=here('data/raw/tutorial_patients_CP949.csv'), locale = read
   * `readxl::excel_sheets()`: 엑셀 파일에 포함된 spreadsheet의 종류 확인
   * `readxl::read_excel()`: 엑셀파일을 읽을 때 
 
+
 ```{r}
 library(readxl)
 readxl::excel_sheets(here('data/raw/tutorial_patients.xlsx'))
@@ -69,22 +70,22 @@ readxl::read_excel(here('data/raw/tutorial_patients.xlsx'))
 ![](src/datapasta.gif)
 ```{r}
 library(datapasta)
-tibble::tribble(
-  ~subject_id, ~gender, ~anchor_age, ~anchor_year,        ~dod,
-    19194449L,     "M",         57L,        2119L,          NA,
-    12207593L,     "M",         43L,        2193L,  "2194.5.6",
-    10656173L,     "F",         33L,        2176L,          NA,
-    10208468L,     "M",         87L,        2134L,          NA,
-    10682002L,     "M",         55L,        2132L,          NA,
-    18860233L,     "F",         54L,        2191L,          NA,
-    16828280L,     "M",         84L,        2141L,          NA,
-    12851972L,     "F",         91L,        2112L,          NA,
-    14923903L,     "M",         81L,        2138L,          NA,
-    10836215L,     "M",         62L,        2142L,          NA,
-    11679839L,     "F",         82L,        2112L,          NA,
-    13050109L,     "F",         82L,        2166L, "2174.3.11"
-  )
-
+table <- tibble::tribble(
+           ~subject_id, ~gender, ~anchor_age, ~anchor_year,        ~dod,
+             15256812L,     "M",         45L,        2133L,          NA,
+             17334909L,     "F",         64L,        2133L,          NA,
+             15701559L,     "M",         89L,        2131L, "2131.7.30",
+             16051778L,     "F",         79L,        2159L,          NA,
+             18137539L,     "M",         52L,        2142L,          NA,
+             12294223L,     "M",         56L,        2145L,          NA,
+             18316605L,     "F",         53L,        2165L,          NA,
+             14133706L,     "F",         89L,        2149L,          NA,
+             16113779L,     "F",         57L,        2154L, "2154.7.11",
+             15386471L,     "F",         29L,        2117L,          NA,
+             10575110L,     "F",         87L,        2160L,          NA,
+             19004451L,     "M",         76L,        2132L,          NA,
+             14851010L,     "M",         62L,        2119L,  "2119.8.4"
+           )
 ```
 
 
@@ -116,12 +117,16 @@ select(patients, 등록번호=subject_id, 성별=gender, 나이=anchor_age)
 filter(patients, gender == 'M', anchor_age > 65)
 ```
 ```{r}
+filter(patients, (gender == 'M')| (anchor_age > 65))
+```
+
+```{r}
 filter(patients, !is.na(dod))
 ```
 
 ### 2-3. **pipe %>%**
 * 명령어를 이어서 적용해주는 역할을 한다. 
-* 단축키: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>
+* 단축키: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>
 
 ```{r}
 patients %>% 
@@ -135,6 +140,9 @@ patients %>%
 
 ```{r}
 patients %>% mutate(gender = ifelse(gender == 'M', 'Male', 'Female'))
+```
+```{r}
+patients %>% mutate(death = ifelse(!is.na(dod), 'Death', 'Alive'))
 ```
 
 ----
@@ -229,7 +237,7 @@ icustays %>%
             age_sd = sd(anchor_age))
 ```
 
-### 2-8. tidyr::pivot_wider() / tidyr::pivor_longer()
+### 2-8. tidyr::pivot_wider() / tidyr::pivot_longer()
 ![](src/tidyr_pivot.png)
 ```{r}
 labevents <- readr::read_csv(here('data/raw/tutorial_labevents.csv'))
@@ -239,7 +247,7 @@ labevents
 ```{r}
 labs <- icustays %>% 
   left_join(labevents) %>% 
-  group_by(label) %>% 
+  group_by(subject_id, hadm_id, stay_id,label) %>% 
   filter(charttime == min(charttime)) %>% 
   select(ends_with('id'), label, value, charttime, intime, outtime)
 labs
