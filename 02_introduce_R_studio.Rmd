@@ -1,7 +1,7 @@
 ---
 title: "02_Introduce_R_studio"
 author: "MinDong Sung M.D."
-date: "4/9/2021"
+date: "2021-04-09"
 output: html_document
 ---
 
