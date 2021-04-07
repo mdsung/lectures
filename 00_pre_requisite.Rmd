@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+Sys.setlocale(category = "LC_CTYPE", locale = "ko_KR.UTF-8")
 ```
 
 ## 강의소개
