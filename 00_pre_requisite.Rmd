@@ -11,47 +11,56 @@ Sys.setlocale(category = "LC_CTYPE", locale = "ko_KR.UTF-8")
 ```
 
 ## 강의소개
-이 강의는 R을 이용해서 데이터를 다루어 보신 분을 대상으로 데이터를 다루고, 시각화하는 방법을 소개하는 강의입니다. 
 
-## Lecture Notes and resources
-* 강의자료 및 참고자료: [github.com/mdsung/2021_TBD_R_tutorial](github.com/mdsung/2021_TBD_R_tutorial)
+이 강의는 R을 이용해서 데이터를 다루어 보신 분을 대상으로
 
-
-![R](src/github_download.png)
-* `data/`: 실습시 사용하는 데이터 폴더
-* `src/`: 노트에서 필요한 그림 저장 폴더
-* `cheatsheet/`: 참고할만한 R 자료 저장 폴더 
-
-## Install R
-[Download R install file](https://cran.r-project.org/src/base/R-4/) 
-
-
-![R](src/r_install_windows_1.png)
-
-## Install Rstudio
-[Download Rstudio install file](https://www.rstudio.com/products/rstudio/download/)
-
-
-![Rstudio](src/rstudio_windows_1.png)
-
-## pre-requisite packages
-```{r echo=T, message=F}
-library(renv)
-renv::restore()
-```
+데이터를 다루고, 시각화하는 방법을 소개하는 강의입니다.
 
 ## 실습 준비 방법
-1. github에서 zip 파일을 다운로드 받는다.
-2. 원하는 폴더에 압축을 푼다. 
-3. 푼 압축 파일에서 '2021_TRD_R_tutorial.Rproj'를 더블 클릭한다. 
-4. Rstudio가 열린다. 
-5. 다음 명령어를 실행시킨다. 
-(만약에 package가 없다고 한다면 `install.packages('renv')`로 package를 다운로드 받는다. )
-```{r}
+
+1.  [실습자료](https://github.com/mdsung/2021_TRD_R_turorial/archive/refs/heads/main.zip)를 다운 받는다.
+2.  원하는 폴더에 압축을 푼다.
+3.  푼 압축 파일에서 '2021_TRD_R\_tutorial.Rproj'를 더블 클릭한다.
+4.  Rstudio가 열린다.
+5.  다음 명령어를 실행시킨다. (만약에 package가 없다고 한다면 `install.packages('renv')`로 package를 다운로드 받는다.)
+
+```{r eval = FALSE}
 library(renv)
 renv::restore()
 ```
 
 ## 명령어 실행방법
-1. code chunk 위에 있는 초록색 화살표를 누르거나
-2. code chunk 위에서 <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>enter</kbd>를 누른다. 
+
+1.  code chunk 위에 있는 초록색 화살표를 누르거나
+2.  code chunk 위에서 <kbd>ctrl</kbd> + <kbd>shift</kbd> + <kbd>enter</kbd>를 누른다.
+
+## Lecture Notes and resources
+
+-   강의자료 및 참고자료: [github.com/mdsung/2021_TBD_R\_tutorial](github.com/mdsung/2021_TBD_R_tutorial)
+
+![](src/github_download.png)
+
+\* `data/`: 실습시 사용하는 데이터 폴더
+
+\* `src/`: 노트에서 필요한 그림 저장 폴더
+
+\* `cheatsheet/`: 참고할만한 R 자료 저장 폴더
+
+## Install R
+
+[Download R install file](https://cran.r-project.org/src/base/R-4/)
+
+![](src/r_install_windows_1.png)
+
+## Install Rstudio
+
+[Download Rstudio install file](https://www.rstudio.com/products/rstudio/download/)
+
+![](src/rstudio_windows_1.png)
+
+## pre-requisite packages
+
+```{r eval=FALSE}
+install.packages(c('renv', 'rmarkdown', 'knitr'))
+install.packages(c('tidyverse', 'tableone', 'ggsignif','cowplot', 'here', 'glue', 'datapasta'))
+```
