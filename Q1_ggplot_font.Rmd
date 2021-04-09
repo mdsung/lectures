@@ -1,0 +1,37 @@
+---
+title: "ggplot font 변경"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include = FALSE}
+library(dplyr)
+library(ggplot2)
+library(here)
+library(extrafont)
+```
+## window내에 font 확인하는 방법
+* 형태:
+  $family 
+  [1] font 종류
+* 추후에 사용하실 때는 family이름을 쓰시면 됩니다. 
+
+```{r}
+windowsFonts()
+```
+
+# font family with default('Arial')
+```{r}
+table <- readr::read_csv(here('data/processed/result_table.csv'))
+p <- table %>% ggplot(aes(x = gender, y = `Heart Rate`)) + geom_boxplot() 
+p
+```
+
+# font family with serif('Times New Roman')
+```{r}
+p + theme(text = element_text(family = 'serif')) 
+```
+
