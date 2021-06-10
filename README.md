@@ -1,4 +1,4 @@
-# 2021_TRD_R_turorial
+# 2021_TRD_R_tutorial
 
 ## Objective
 이 강의는 R로 데이터를 한번이라도 다뤄본 사람들을 대상으로 
