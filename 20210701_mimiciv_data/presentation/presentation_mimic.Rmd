@@ -124,7 +124,7 @@ Algorithm <br>
 ---
 ### Mean arterial pressure and mortality in patients with distributive shock: a retrospective analysis of the MIMIC-III database (Annals of Intensive Care, 2018)
 ```{r echo = F, message = F, fig.align='center', out.width='60%'}
-knitr::include_graphics('../figure/vincent2018_figure.png')
+knitr::include_graphics('figure/vincent2018_figure.png')
 ```
 .footnote[
 Vincent, JL., Nielsen, N.D., Shapiro, N.I. et al. Mean arterial pressure and mortality in patients with distributive shock: a retrospective analysis of the MIMIC-III database. Ann. Intensive Care 8, 107 (2018).
@@ -132,7 +132,7 @@ Vincent, JL., Nielsen, N.D., Shapiro, N.I. et al. Mean arterial pressure and mor
 ---
 ### Transthoracic echocardiography and mortality in sepsis: analysis of the MIMIC-III database (ICM, 2018)
 ```{r echo = F, message = F, fig.align='center', out.width='90%'}
-knitr::include_graphics('../figure/feng2018_figure.png')
+knitr::include_graphics('figure/feng2018_figure.png')
 ```
 .footnote[
 Feng, M., McSparron, J.I., Kien, D.T. et al. Transthoracic echocardiography and mortality in sepsis: analysis of the MIMIC-III database. Intensive Care Med 44, 884–892 (2018).
@@ -140,7 +140,7 @@ Feng, M., McSparron, J.I., Kien, D.T. et al. Transthoracic echocardiography and 
 ---
 ### An Interpretable Machine Learning Model for Accurate Prediction of Sepsis in the ICU (CCM 2018)
 ```{r echo = F, message = F, fig.align='center', out.width='80%'}
-knitr::include_graphics('../figure/nemati2018_figure.jpeg')
+knitr::include_graphics('figure/nemati2018_figure.jpeg')
 ```
 .footnote[
 Nemati, Shamim et al., An Interpretable Machine Learning Model for Accurate Prediction of Sepsis in the ICU, Critical Care Medicine: April 2018 - Volume 46 - Issue 4 - p 547-553
@@ -148,7 +148,7 @@ Nemati, Shamim et al., An Interpretable Machine Learning Model for Accurate Pred
 ---
 ### Early prediction of circulatory failure in the intensive care unit using machine learning (Nature Medicine 2020)
 ```{r echo = F, message = F, fig.align='center', out.width='35%'}
-knitr::include_graphics('../figure/hyland2020_figure.png')
+knitr::include_graphics('figure/hyland2020_figure.png')
 ```
 .footnote[
 Hyland, Stephanie L., et al. "Early prediction of circulatory failure in the intensive care unit using machine learning." Nature medicine 26.3 (2020): 364-373.
@@ -157,7 +157,7 @@ Hyland, Stephanie L., et al. "Early prediction of circulatory failure in the int
 ### Continuous blood pressure measurement from one-channel electrocardiogram signal using deep-learning techniques(Artificial Intelligence in Medicine, 2020)
 <br>
 ```{r echo = F, message = F, fig.align='center', out.width='100%'}
-knitr::include_graphics('../figure/miao2020_figure.png')
+knitr::include_graphics('figure/miao2020_figure.png')
 ```
 .footnote[
 Fen Miao et al., Continuous blood pressure measurement from one-channel electrocardiogram signal using deep-learning techniques, Artificial Intelligence in Medicine, Volume 108, 2020
@@ -167,7 +167,7 @@ Fen Miao et al., Continuous blood pressure measurement from one-channel electroc
 <br>
 <br>
 ```{r echo = F, message = F, fig.align='center', out.width='100%'}
-knitr::include_graphics('../figure/yang2020_figure.png')
+knitr::include_graphics('figure/yang2020_figure.png')
 ```
 .footnote[
 Xi Yang, Jiang Bian, William R Hogan, Yonghui Wu, Clinical concept extraction using transformers, Journal of the American Medical Informatics Association, Volume 27, Issue 12, December 2020, Pages 1935–1942,
@@ -193,16 +193,16 @@ class: inverse, center, middle
 ## Modular structure of MIMIC IV - Hosp
 * laboratory measurements ([labevents](https://mimic.mit.edu/docs/iv/modules/hosp/labevents/)), 
 
-* microbiology cultures ([microbiologyevents](https://mimic.mit.edu/docs/iv/modules/hosp/microbiologyevents/)), 
+* microbiology cultures ([microbiologyevents](https://mimic.mit.edu/docs/iv/modules/hosp/microbiologyevents/))
 
-* provider orders ([poe](https://mimic.mit.edu/docs/iv/modules/hosp/poe/), [poe_detail](https://mimic.mit.edu/
+* provider orders ([poe](https://mimic.mit.edu/docs/iv/modules/hosp/poe/)[poe_detail](https://mimic.mit.edu/
 docs/iv/modules/hosp/poe_detail/)), 
 
-* medication administration ([emar](https://mimic.mit.edu/docs/iv/modules/hosp/emar/), [emar_detail](https://mimic.mit.edu/docs/iv/modules/hosp/emar_detail/)), 
+* medication administration ([emar](https://mimic.mit.edu/docs/iv/modules/hosp/emar/) [emar_detail](https://mimic.mit.edu/docs/iv/modules/hosp/emar_detail/))
 
-* medication prescription ([prescriptions](https://mimic.mit.edu/docs/iv/modules/hosp/prescriptions/), [pharmacy](https://mimic.mit.edu/docs/iv/modules/hosp/pharmacy/)), 
+* medication prescription ([prescriptions](https://mimic.mit.edu/docs/iv/modules/hosp/prescriptions/) [pharmacy](https://mimic.mit.edu/docs/iv/modules/hosp/pharmacy/)) 
 
-* hospital billing information ([diagnoses_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [procedures_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [hcpcsevents](https://mimic.mit.edu/docs/iv/modules/hosp/hcpcsevents/)]), and 
+* hospital billing information ([diagnoses_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [procedures_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [hcpcsevents](https://mimic.mit.edu/docs/iv/modules/hosp/hcpcsevents/)])
 
 * service(department information) related information ([services](https://mimic.mit.edu/docs/iv/modules/hosp/services/)).
 
@@ -235,9 +235,8 @@ docs/iv/modules/hosp/poe_detail/)),
 #### [d_labitems](https://mimic.mit.edu/docs/iv/modules/hosp/d_labitems/)
   - Dimension table for labevents; provides a description of all lab items.
 
-#### [d_itmes](https://mimic.mit.edu/docs/iv/modules/icu/d_items/)
+#### [d_items](https://mimic.mit.edu/docs/iv/modules/icu/d_items/)
   - Dimension table describing itemid. Defines concepts recorded in the events table in the ICU module.
-
 
 ---
 class: inverse, center, middle
