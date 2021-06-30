@@ -179,48 +179,51 @@ class: inverse, center, middle
 ### What kind of data the MIMIC has?
 ---
 ## Modular structure of MIMIC IV - Core
-* [Patients](https://mimic.mit.edu/docs/iv/modules/core/patients/)
+#### [Patients](https://mimic.mit.edu/docs/iv/modules/core/patients/)
   - Information that is consistent for the lifetime of a patient is stored in this table.
       
-* [Admissions](https://mimic.mit.edu/docs/iv/modules/core/admissions/)
+#### [Admissions](https://mimic.mit.edu/docs/iv/modules/core/admissions/)
   - The admissions table gives information regarding a patient’s admission to the hospital. Since each unique hospital visit for a patient is assigned a unique `hadm_id`, the admissions table can be considered as a definition table for `hadm_id`. Information available includes timing information for admission and discharge, demographic information, the source of the admission, and so on.
 
-* [Transfers](https://mimic.mit.edu/docs/iv/modules/core/transfers/)
+#### [Transfers](https://mimic.mit.edu/docs/iv/modules/core/transfers/)
   - Physical locations for patients throughout their hospital stay.
 
 
 ---
 ## Modular structure of MIMIC IV - Hosp
-* laboratory measurements ([labevents](https://mimic.mit.edu/docs/iv/modules/hosp/labevents/)), 
+#### Laboratory measurements, microbiology cultures ([labevents](https://mimic.mit.edu/docs/iv/modules/hosp/labevents/), [microbiologyevents](https://mimic.mit.edu/docs/iv/modules/hosp/microbiologyevents/)), 
+  - Laboratory measurements sourced from patient derived specimens.
+  - Microbiology cultures.
 
-* microbiology cultures ([microbiologyevents](https://mimic.mit.edu/docs/iv/modules/hosp/microbiologyevents/))
+#### Provider orders ([poe](https://mimic.mit.edu/docs/iv/modules/hosp/poe/), [poe_detail](https://mimic.mit.edu/docs/iv/modules/hosp/poe_detail/)), 
+  - Orders made by providers relating to patient care.
 
-* provider orders ([poe](https://mimic.mit.edu/docs/iv/modules/hosp/poe/)[poe_detail](https://mimic.mit.edu/
-docs/iv/modules/hosp/poe_detail/)), 
+#### Medication prescription/administration ([prescriptions](https://mimic.mit.edu/docs/iv/modules/hosp/prescriptions/) [pharmacy](https://mimic.mit.edu/docs/iv/modules/hosp/pharmacy/); [emar](https://mimic.mit.edu/docs/iv/modules/hosp/emar/) [emar_detail](https://mimic.mit.edu/docs/iv/modules/hosp/emar_detail/)) 
+  - Prescribed medications.
+  - The Electronic Medicine Administration Record (eMAR); barcode scanning of medications at the time of administration.
 
-* medication administration ([emar](https://mimic.mit.edu/docs/iv/modules/hosp/emar/) [emar_detail](https://mimic.mit.edu/docs/iv/modules/hosp/emar_detail/))
+---
+#### Hospital billing information ([diagnoses_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [procedures_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [hcpcsevents](https://mimic.mit.edu/docs/iv/modules/hosp/hcpcsevents/))
+  - Billed ICD-9/ICD-10 diagnoses for hospitalizations.
+  - Billed procedures for patients during their hospital stay.
+  - Billed events occurring during the hospitalization. Includes CPT codes.
 
-* medication prescription ([prescriptions](https://mimic.mit.edu/docs/iv/modules/hosp/prescriptions/) [pharmacy](https://mimic.mit.edu/docs/iv/modules/hosp/pharmacy/)) 
-
-* hospital billing information ([diagnoses_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [procedures_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [hcpcsevents](https://mimic.mit.edu/docs/iv/modules/hosp/hcpcsevents/)])
-
-* service(department information) related information ([services](https://mimic.mit.edu/docs/iv/modules/hosp/services/)).
+#### Service(department information) related information ([services](https://mimic.mit.edu/docs/iv/modules/hosp/services/)).
+  - The hospital service(s) which cared for the patient during their hospitalization.
 
 ---
 ## Modular structure of MIMIC IV - ICU
-* charted information ([chartevents](https://mimic.mit.edu/docs/iv/modules/icu/chartevents/)).
+#### Charted information ([chartevents](https://mimic.mit.edu/docs/iv/modules/icu/chartevents/)).
   - Charted items occurring during the ICU stay. Contains the majority of information documented in the ICU.
 
-* intravenous and fluid inputs ([inputevents](https://mimic.mit.edu/docs/iv/modules/icu/inputevents/))
+#### Intravenous and fluid inputs and patient output([inputevents](https://mimic.mit.edu/docs/iv/modules/icu/inputevents/), [outputevents](https://mimic.mit.edu/docs/iv/modules/icu/outputevents/))
   - Information documented regarding continuous infusions or intermittent administrations.
-
-* patient outputs ([outputevents](https://mimic.mit.edu/docs/iv/modules/icu/outputevents/))
   - Information regarding patient outputs including urine, drainage, and so on.
 
-* procedures ([procedureevents](https://mimic.mit.edu/docs/iv/modules/icu/procedureevents/))
+#### Procedures ([procedureevents](https://mimic.mit.edu/docs/iv/modules/icu/procedureevents/))
   - Procedures documented during the ICU stay (e.g. ventilation), though not necessarily conducted within the ICU (e.g. x-ray imaging).
 
-* information documented as a date or time ([datetimeevents](https://mimic.mit.edu/docs/iv/modules/icu/datetimesevents/))
+#### Information documented as a date or time ([datetimeevents](https://mimic.mit.edu/docs/iv/modules/icu/datetimesevents/))
   - Documented information which is in a date format (e.g. date of last dialysis).
 
 
@@ -243,8 +246,12 @@ class: inverse, center, middle
 # Other data related to MIMIC
 
 ---
-## MIMIC-CXR (MIMIC IV)
-
+## MIMIC-CXR / MIMIC-CXR-JPG (MIMIC IV)
+- Queried the BIDMC EHR for chest x-ray studies made in the emergency department between 2011 - 2016
+- Extracted the set of patient identifiers associated with these studies.
+```{r echo = F, message = F, fig.align='center', out.width='75%'}
+knitr::include_graphics('figure/mimic_cxr.png')
+```
 .footnote[
 1. Johnson AE, Pollard TJ, Berkowitz SJ, Greenbaum NR, Lungren MP, Deng CY, Mark RG, Horng S. MIMIC-CXR, a de-identified publicly available database of chest radiographs with free-text reports. Scientific Data. 2019;6.
 2. https://github.com/MIT-LCP/mimic-cxr
@@ -254,7 +261,9 @@ class: inverse, center, middle
 - Waveforms almost always include one or more ECG signals, and often include continuous arterial blood pressure (ABP) waveforms, fingertip photoplethysmogram (PPG) signals, and respiration, with additional waveforms (up to 8 simultaneously) as available. 
 - Numerics typically include heart and respiration rates, SpO2, and systolic, mean, and diastolic blood pressure, together with others as available. 
 - Recording lengths also vary; most are a few days in duration, but some are shorter and others are several weeks long.
-
+```{r echo = F, message = F, fig.align='center', out.width='50%'}
+knitr::include_graphics('figure/mimic_waveform.png')
+```
 .footnote[
 https://physionet.org/content/mimic3wdb/1.0/
 ]
@@ -288,8 +297,47 @@ DT::datatable(tables,
 ```
 ]
 ---
+```{sql, connection=con, output.var = "d_icd_diagnoses"} 
+SELECT * FROM d_icd_diagnoses LIMIT 20;
+```
+```{r echo=FALSE}
+d_icd_diagnoses %>% 
+  DT::datatable(rownames = FALSE,
+                options = list(
+                  dom = 't',
+                  pageLength = 20,
+                  scroller = TRUE,
+                  scrollY = 170, 
+                  scrollX = 600,
+                  headerCallback = DT::JS(
+                    "function(thead) {",
+                    "  $(thead).css('font-size', '.75em');",
+                    "}")
+                  )) %>%
+  DT::formatStyle(columns = colnames(d_icd_diagnoses) , fontSize = '13px')
+```
+```{sql, connection=con, output.var = "diagnoses_icd"} 
+SELECT * FROM diagnoses_icd LIMIT 20;
+```
+```{r echo=FALSE}
+diagnoses_icd %>% 
+  DT::datatable(rownames = FALSE,
+                options = list(
+                  dom = 't',
+                  pageLength = 20,
+                  scroller = TRUE,
+                  scrollY = 170, 
+                  scrollX = 600,
+                  headerCallback = DT::JS(
+                    "function(thead) {",
+                    "  $(thead).css('font-size', '.75em');",
+                    "}")
+                  )) %>%
+  DT::formatStyle(columns = colnames(diagnoses_icd) , fontSize = '13px')
+```
+---
 ```{sql, connection=con, output.var = "chartevents"} 
-SELECT * FROM chartevents WHERE itemid IN (220050, 220051, 220052, 220045, 220210, 223762) LIMIT 20;
+SELECT * FROM chartevents WHERE itemid IN (220050, 220051, 220052, 220045, 220210, 223762) AND stay_id = 30600691 ORDER BY stay_id, charttime LIMIT 20;
 ```
 ```{r echo=FALSE}
 chartevents %>% 
@@ -349,7 +397,8 @@ DT::datatable(labevents,
               )) %>% 
   DT::formatStyle(columns = colnames(labevents), fontSize = '13px')
 ```
+
 ---
-# Reference
-1. [https://physionet.org/content/mimiciv/1.0/](https://physionet.org/content/mimiciv/1.0/)
-2. [https://mimic.mit.edu/iv/](https://mimic.mit.edu/iv/)
+class: inverse, center, middle
+
+# END
