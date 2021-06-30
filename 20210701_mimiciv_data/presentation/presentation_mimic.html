@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MIMIC</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="MinDong Sung, M.D." />
+    <meta name="date" content="2021-07-01" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <script src="libs/jquery-1.12.4/jquery.min.js"></script>
+    <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="libs/datatables-binding-0.18/datatables.js"></script>
+    <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+    <link href="libs/dt-ext-scroller-1.10.20/css/scroller.dataTables.min.css" rel="stylesheet" />
+    <script src="libs/dt-ext-scroller-1.10.20/js/dataTables.scroller.min.js"></script>
+    <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# MIMIC
+## The Medical Information Mart for Intensive Care
+### MinDong Sung, M.D.
+### DHLab, Yonsei University College of Medicine
+### 2021-07-01
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Introduction
+---
+## MIMIC-III
+* Provide critical care data for over 40,000 patients &lt;br&gt;
+admitted to ICU at the Beth Israel Deaconess Medical Center (BIDMC).
+
+* deidentified, and patient identifiers were removed 
+
+* MIMIC-III has been integral in driving large amounts of research in clinical informatics, epidemiology, and machine learning.
+---
+## MIMIC-IV
+* MIMIC-IV is intended to carry on the success of MIMIC-III
+
+* Support a broad set of applications within healthcare.
+
+* MIMIC-IV adopts a modular approach to data organization, 
+
+* Highlight data provenance 
+
+* Facilitate both individual and combined use of disparate data sources.
+---
+## Methods
+### Acquisition
+  - Inclusion criteria
+      - who were admitted to the BIDMC ED or any the ICU, 2008 - 2019.
+  - Extracted from the respective hospital databases
+  - A master patient list was created 
+  - All source tables were filtered to only rows related to patients in the master patient list.
+
+### Preparation
+- The data were reorganized to better facilitate retrospective data analysis. 
+  - the de-normalization of tables
+  - removal of audit trails
+  - reorganization into fewer tables
+  - to simplify retrospective analysis of the database. 
+- Data cleaning steps were not performed
+  - to ensure the data reflects a real-world clinical dataset.
+
+---
+
+## Methods
+### De-identify
+  - Patient identifiers as stipulated by HIPAA were removed. 
+  - Patient identifiers were replaced using a random cipher, resulting in deidentified integer identifiers for patients, hospitalizations, and ICU stays. 
+  - Structured data were filtered using look up tables and allow lists. 
+  - If necessary, a free-text deidentification algorithm was applied to remove PHI from free-text. 
+  - Finally, date and times were shifted randomly into the future using an offset measured in days. A single date shift was assigned to each subject_id. As a result, the data for a single patient are internally consistent. 
+
+---
+class: inverse, center, middle
+# Backgrouds for hostpital data
+### How the patient data have been generated?
+
+---
+# CASE
+### Think about patient flows in hospital
+* Patient
+
+--
+* Admission
+
+--
+* Chartevents
+
+--
+* Provider orders(poe)/medication administration(emar)
+
+--
+* Labevents
+
+--
+* Chest X ray
+
+--
+* Diagnoses_icd
+
+--
+* Transfer
+
+--
+* chartevents
+* datetimeevents
+* inputevents
+* outputevents
+* procedureevents
+
+--
+* icustays
+
+---
+class: inverse, center, middle
+
+# Papers from MIMIC data
+### Researches based on MIMIC data
+Clinical &lt;br&gt;
+Model for clinicians &lt;br&gt;
+Algorithm &lt;br&gt;
+---
+### Mean arterial pressure and mortality in patients with distributive shock: a retrospective analysis of the MIMIC-III database (Annals of Intensive Care, 2018)
+&lt;img src="figure/vincent2018_figure.png" width="60%" style="display: block; margin: auto;" /&gt;
+.footnote[
+Vincent, JL., Nielsen, N.D., Shapiro, N.I. et al. Mean arterial pressure and mortality in patients with distributive shock: a retrospective analysis of the MIMIC-III database. Ann. Intensive Care 8, 107 (2018).
+]
+---
+### Transthoracic echocardiography and mortality in sepsis: analysis of the MIMIC-III database (ICM, 2018)
+&lt;img src="figure/feng2018_figure.png" width="90%" style="display: block; margin: auto;" /&gt;
+.footnote[
+Feng, M., McSparron, J.I., Kien, D.T. et al. Transthoracic echocardiography and mortality in sepsis: analysis of the MIMIC-III database. Intensive Care Med 44, 884–892 (2018).
+]
+---
+### An Interpretable Machine Learning Model for Accurate Prediction of Sepsis in the ICU (CCM 2018)
+&lt;img src="figure/nemati2018_figure.jpeg" width="80%" style="display: block; margin: auto;" /&gt;
+.footnote[
+Nemati, Shamim et al., An Interpretable Machine Learning Model for Accurate Prediction of Sepsis in the ICU, Critical Care Medicine: April 2018 - Volume 46 - Issue 4 - p 547-553
+]
+---
+### Early prediction of circulatory failure in the intensive care unit using machine learning (Nature Medicine 2020)
+&lt;img src="figure/hyland2020_figure.png" width="35%" style="display: block; margin: auto;" /&gt;
+.footnote[
+Hyland, Stephanie L., et al. "Early prediction of circulatory failure in the intensive care unit using machine learning." Nature medicine 26.3 (2020): 364-373.
+]
+---
+### Continuous blood pressure measurement from one-channel electrocardiogram signal using deep-learning techniques(Artificial Intelligence in Medicine, 2020)
+&lt;br&gt;
+&lt;img src="figure/miao2020_figure.png" width="100%" style="display: block; margin: auto;" /&gt;
+.footnote[
+Fen Miao et al., Continuous blood pressure measurement from one-channel electrocardiogram signal using deep-learning techniques, Artificial Intelligence in Medicine, Volume 108, 2020
+]
+---
+### Clinical concept extraction using transformers (JAMIA 2020)
+&lt;br&gt;
+&lt;br&gt;
+&lt;img src="figure/yang2020_figure.png" width="100%" style="display: block; margin: auto;" /&gt;
+.footnote[
+Xi Yang, Jiang Bian, William R Hogan, Yonghui Wu, Clinical concept extraction using transformers, Journal of the American Medical Informatics Association, Volume 27, Issue 12, December 2020, Pages 1935–1942,
+]
+---
+class: inverse, center, middle
+
+# Tables 
+### What kind of data the MIMIC has?
+---
+## Modular structure of MIMIC IV - Core
+#### [Patients](https://mimic.mit.edu/docs/iv/modules/core/patients/)
+  - Information that is consistent for the lifetime of a patient is stored in this table.
+      
+#### [Admissions](https://mimic.mit.edu/docs/iv/modules/core/admissions/)
+  - The admissions table gives information regarding a patient’s admission to the hospital. Since each unique hospital visit for a patient is assigned a unique `hadm_id`, the admissions table can be considered as a definition table for `hadm_id`. Information available includes timing information for admission and discharge, demographic information, the source of the admission, and so on.
+
+#### [Transfers](https://mimic.mit.edu/docs/iv/modules/core/transfers/)
+  - Physical locations for patients throughout their hospital stay.
+
+
+---
+## Modular structure of MIMIC IV - Hosp
+#### Laboratory measurements, microbiology cultures ([labevents](https://mimic.mit.edu/docs/iv/modules/hosp/labevents/), [microbiologyevents](https://mimic.mit.edu/docs/iv/modules/hosp/microbiologyevents/)), 
+  - Laboratory measurements sourced from patient derived specimens.
+  - Microbiology cultures.
+
+#### Provider orders ([poe](https://mimic.mit.edu/docs/iv/modules/hosp/poe/), [poe_detail](https://mimic.mit.edu/docs/iv/modules/hosp/poe_detail/)), 
+  - Orders made by providers relating to patient care.
+
+#### Medication prescription/administration ([prescriptions](https://mimic.mit.edu/docs/iv/modules/hosp/prescriptions/) [pharmacy](https://mimic.mit.edu/docs/iv/modules/hosp/pharmacy/); [emar](https://mimic.mit.edu/docs/iv/modules/hosp/emar/) [emar_detail](https://mimic.mit.edu/docs/iv/modules/hosp/emar_detail/)) 
+  - Prescribed medications.
+  - The Electronic Medicine Administration Record (eMAR); barcode scanning of medications at the time of administration.
+
+---
+#### Hospital billing information ([diagnoses_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [procedures_icd](https://mimic.mit.edu/docs/iv/modules/hosp/diagnoses_icd/), [hcpcsevents](https://mimic.mit.edu/docs/iv/modules/hosp/hcpcsevents/))
+  - Billed ICD-9/ICD-10 diagnoses for hospitalizations.
+  - Billed procedures for patients during their hospital stay.
+  - Billed events occurring during the hospitalization. Includes CPT codes.
+
+#### Service(department information) related information ([services](https://mimic.mit.edu/docs/iv/modules/hosp/services/)).
+  - The hospital service(s) which cared for the patient during their hospitalization.
+
+---
+## Modular structure of MIMIC IV - ICU
+#### Charted information ([chartevents](https://mimic.mit.edu/docs/iv/modules/icu/chartevents/)).
+  - Charted items occurring during the ICU stay. Contains the majority of information documented in the ICU.
+
+#### Intravenous and fluid inputs and patient output([inputevents](https://mimic.mit.edu/docs/iv/modules/icu/inputevents/), [outputevents](https://mimic.mit.edu/docs/iv/modules/icu/outputevents/))
+  - Information documented regarding continuous infusions or intermittent administrations.
+  - Information regarding patient outputs including urine, drainage, and so on.
+
+#### Procedures ([procedureevents](https://mimic.mit.edu/docs/iv/modules/icu/procedureevents/))
+  - Procedures documented during the ICU stay (e.g. ventilation), though not necessarily conducted within the ICU (e.g. x-ray imaging).
+
+#### Information documented as a date or time ([datetimeevents](https://mimic.mit.edu/docs/iv/modules/icu/datetimesevents/))
+  - Documented information which is in a date format (e.g. date of last dialysis).
+
+
+---
+## Modular structure of MIMIC IV - code dictionary
+#### [d_icd_diagnoses](https://mimic.mit.edu/docs/iv/modules/hosp/d_icd_diagnoses/)
+  - Dimension table for diagnoses_icd; provides a description of ICD-9/ICD-10 billed diagnoses.
+
+#### [d_icd_procedures](https://mimic.mit.edu/docs/iv/modules/hosp/d_icd_procedures/)
+  - Dimension table for procedures_icd; provides a description of ICD-9/ICD-10 billed procedures.
+
+#### [d_labitems](https://mimic.mit.edu/docs/iv/modules/hosp/d_labitems/)
+  - Dimension table for labevents; provides a description of all lab items.
+
+#### [d_items](https://mimic.mit.edu/docs/iv/modules/icu/d_items/)
+  - Dimension table describing itemid. Defines concepts recorded in the events table in the ICU module.
+
+---
+class: inverse, center, middle
+# Other data related to MIMIC
+
+---
+## MIMIC-CXR / MIMIC-CXR-JPG (MIMIC IV)
+- Queried the BIDMC EHR for chest x-ray studies made in the emergency department between 2011 - 2016
+- Extracted the set of patient identifiers associated with these studies.
+&lt;img src="figure/mimic_cxr.png" width="75%" style="display: block; margin: auto;" /&gt;
+.footnote[
+1. Johnson AE, Pollard TJ, Berkowitz SJ, Greenbaum NR, Lungren MP, Deng CY, Mark RG, Horng S. MIMIC-CXR, a de-identified publicly available database of chest radiographs with free-text reports. Scientific Data. 2019;6.
+2. https://github.com/MIT-LCP/mimic-cxr
+]
+---
+## MIMIC-Waveform (MIMIC III)
+- Waveforms almost always include one or more ECG signals, and often include continuous arterial blood pressure (ABP) waveforms, fingertip photoplethysmogram (PPG) signals, and respiration, with additional waveforms (up to 8 simultaneously) as available. 
+- Numerics typically include heart and respiration rates, SpO2, and systolic, mean, and diastolic blood pressure, together with others as available. 
+- Recording lengths also vary; most are a few days in duration, but some are shorter and others are several weeks long.
+&lt;img src="figure/mimic_waveform.png" width="50%" style="display: block; margin: auto;" /&gt;
+.footnote[
+https://physionet.org/content/mimic3wdb/1.0/
+]
+---
+class: inverse, center, middle
+
+# How to access the data
+---
+## Access
+
+.left-code[
+
+```sql
+SHOW tables;
+```
+]
+
+.right-plot[
+<div id="htmlwidget-8947826c352b842a139e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8947826c352b842a139e">{"x":{"filter":"none","extensions":["Scroller"],"data":[["admissions","chartevents","d_hcpcs","d_icd_diagnoses","d_icd_procedures","d_items","d_labitems","datetimeevents","diagnoses_icd","drgcodes","emar","emar_detail","hcpcsevents","icustays","inputevents","labevents","microbiologyevents","outputevents","patients","pharmacy","poe","poe_detail","prescriptions","procedureevents","procedures_icd","services","transfers"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Tables_in_mimiciv<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","scrollY":400,"scroller":true,"headerCallback":"function(thead) {\n  $(thead).css('font-size', '.75em');\n}","order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.headerCallback"],"jsHooks":[]}</script>
+]
+---
+
+```sql
+SELECT * FROM d_icd_diagnoses LIMIT 20;
+```
+<div id="htmlwidget-b1428ed78869573e0f85" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b1428ed78869573e0f85">{"x":{"filter":"none","data":[["0010","0011","0019","0020","0021","0022","0023","0029","0030","0031","00320","00321","00322","00323","00324","00329","0038","0039","0040","0041"],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],["Cholera due to vibrio cholerae","Cholera due to vibrio cholerae el tor","Cholera, unspecified","Typhoid fever","Paratyphoid fever A","Paratyphoid fever B","Paratyphoid fever C","Paratyphoid fever, unspecified","Salmonella gastroenteritis","Salmonella septicemia","Localized salmonella infection, unspecified","Salmonella meningitis","Salmonella pneumonia","Salmonella arthritis","Salmonella osteomyelitis","Other localized salmonella infections","Other specified salmonella infections","Salmonella infection, unspecified","Shigella dysenteriae","Shigella flexneri"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>icd_code<\/th>\n      <th>icd_version<\/th>\n      <th>long_title<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":20,"scroller":true,"scrollY":170,"scrollX":600,"headerCallback":"function(thead) {\n  $(thead).css('font-size', '.75em');\n}","columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,20,25,50,100],"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'13px'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'13px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'13px'});\n}"}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+
+```sql
+SELECT * FROM diagnoses_icd LIMIT 20;
+```
+<div id="htmlwidget-c2bb10a11d8ccc5156e1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c2bb10a11d8ccc5156e1">{"x":{"filter":"none","data":[[15734973,15734973,15734973,15734973,15734973,11442057,11442057,11442057,11442057,11442057,11442057,10072949,10072949,10072949,10072949,10072949,13538405,13538405,13538405,13538405],[20475282,20475282,20475282,20475282,20475282,21518990,21518990,21518990,21518990,21518990,21518990,20817034,20817034,20817034,20817034,20817034,24822466,24822466,24822466,24822466],[3,2,5,1,4,1,2,6,3,5,4,4,2,1,5,3,5,2,3,1],["2825","V0251","V270","64891","66481","65971","64231","V270","64511","65961","65911","7840","65221","64231","V270","64681","V0251","V270","65611","66411"],[9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>subject_id<\/th>\n      <th>hadm_id<\/th>\n      <th>seq_num<\/th>\n      <th>icd_code<\/th>\n      <th>icd_version<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":20,"scroller":true,"scrollY":170,"scrollX":600,"headerCallback":"function(thead) {\n  $(thead).css('font-size', '.75em');\n}","columnDefs":[{"className":"dt-right","targets":[0,1,2,4]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,20,25,50,100],"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'13px'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'13px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'13px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'13px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'13px'});\n}"}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+---
+
+```sql
+SELECT * FROM chartevents WHERE itemid IN (220050, 220051, 220052, 220045, 220210, 223762) AND stay_id = 30600691 ORDER BY stay_id, charttime LIMIT 20;
+```
+<div id="htmlwidget-8271a96659be4118dd54" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8271a96659be4118dd54">{"x":{"filter":"none","data":[[10003700,10003700,10003700,10003700,10003700,10003700,10003700,10003700,10003700,10003700],[28623837,28623837,28623837,28623837,28623837,28623837,28623837,28623837,28623837,28623837],[30600691,30600691,30600691,30600691,30600691,30600691,30600691,30600691,30600691,30600691],["2165-04-24T05:30:00Z","2165-04-24T05:30:00Z","2165-04-24T06:00:00Z","2165-04-24T06:00:00Z","2165-04-24T06:09:00Z","2165-04-24T06:09:00Z","2165-04-24T07:00:00Z","2165-04-24T07:00:00Z","2165-04-24T08:00:00Z","2165-04-24T08:00:00Z"],["2165-04-24T05:37:00Z","2165-04-24T05:37:00Z","2165-04-24T06:09:00Z","2165-04-24T06:09:00Z","2165-04-24T06:09:00Z","2165-04-24T06:09:00Z","2165-04-24T07:51:00Z","2165-04-24T07:51:00Z","2165-04-24T08:19:00Z","2165-04-24T08:19:00Z"],[220210,220045,220210,220045,220210,220045,220210,220045,220045,220210],["14","65","14","56","14","55","14","57","56","14"],[14,65,14,56,14,55,14,57,56,14],["insp/min","bpm","insp/min","bpm","insp/min","bpm","insp/min","bpm","bpm","insp/min"],[0,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>subject_id<\/th>\n      <th>hadm_id<\/th>\n      <th>stay_id<\/th>\n      <th>charttime<\/th>\n      <th>storetime<\/th>\n      <th>itemid<\/th>\n      <th>value<\/th>\n      <th>valuenum<\/th>\n      <th>valueuom<\/th>\n      <th>warning<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","pageLength":20,"scroller":true,"scrollY":400,"scrollX":600,"headerCallback":"function(thead) {\n  $(thead).css('font-size', '.75em');\n}","columnDefs":[{"className":"dt-right","targets":[0,1,2,5,7,9]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,20,25,50,100],"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'13px'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'13px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'13px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'13px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'13px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'13px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'13px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'13px'});\nvar value=data[8]; $(this.api().cell(row, 8).node()).css({'font-size':'13px'});\nvar value=data[9]; $(this.api().cell(row, 9).node()).css({'font-size':'13px'});\n}"}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+---
+
+```sql
+SELECT * FROM d_labitems LIMIT 10;
+```
+
+<div id="htmlwidget-1885a4777e398835ea36" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1885a4777e398835ea36">{"x":{"filter":"none","extensions":["Scroller"],"data":[[50801,50802,50803,50804,50805,50806,50807,50808,50809,50810],["Alveolar-arterial Gradient","Base Excess","Calculated Bicarbonate, Whole Blood","Calculated Total CO2","Carboxyhemoglobin","Chloride, Whole Blood","Comments","Free Calcium","Glucose","Hematocrit, Calculated"],["Blood","Blood","Blood","Blood","Blood","Blood","Blood","Blood","Blood","Blood"],["Blood Gas","Blood Gas","Blood Gas","Blood Gas","Blood Gas","Blood Gas","Blood Gas","Blood Gas","Blood Gas","Blood Gas"],[null,null,null,null,null,null,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>itemid<\/th>\n      <th>label<\/th>\n      <th>fluid<\/th>\n      <th>category<\/th>\n      <th>loinc_code<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","scrollY":170,"scroller":true,"scrollX":true,"headerCallback":"function(thead) {\n  $(thead).css('font-size', '.75em');\n}","columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'13px'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'13px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'13px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'13px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'13px'});\n}"}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+
+
+```sql
+SELECT * FROM labevents LIMIT 10;
+```
+
+<div id="htmlwidget-e179d461746aa87f139d" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e179d461746aa87f139d">{"x":{"filter":"none","extensions":["Scroller"],"data":[[5,13,44,69,93,99,108,114,168,225],[10000019,10000019,10000032,10000032,10000032,10000032,10000032,10000032,10000032,10000032],[25058216,25058216,null,null,null,null,null,null,22595853,null],[74089533,74089533,52958335,52958335,81886159,81886159,31644093,31644093,63952157,10791162],[51200,51250,50900,51000,51200,51250,51200,51250,51250,51200],["2129-05-21T21:10:00Z","2129-05-21T21:10:00Z","2180-03-23T11:51:00Z","2180-03-23T11:51:00Z","2180-03-23T11:51:00Z","2180-03-23T11:51:00Z","2180-05-06T22:25:00Z","2180-05-06T22:25:00Z","2180-05-07T05:05:00Z","2180-06-22T11:15:00Z"],["2129-05-21T22:01:00Z","2129-05-21T21:56:00Z","2180-03-23T16:40:00Z","2180-03-23T16:40:00Z","2180-03-23T15:19:00Z","2180-03-23T15:19:00Z","2180-05-06T22:42:00Z","2180-05-06T22:42:00Z","2180-05-07T06:22:00Z","2180-06-22T14:50:00Z"],["1","102","6.1","73","3.8","103","4.2","99","99","2.8"],[1,102,6.09999990463257,73,3.79999995231628,103,4.19999980926514,99,99,2.79999995231628],["%","fL","ng/mL","mg/dL","%","fL","%","fL","fL","%"],[0,78,0,0,0,82,0,82,82,0],[4,102,4,149,4,98,4,98,98,4],[null,null,"abnormal",null,null,"abnormal","abnormal","abnormal","abnormal",null],["STAT","STAT","ROUTINE","ROUTINE","ROUTINE","ROUTINE","STAT","STAT","ROUTINE","ROUTINE"],[null,null,"___","LDL(CALC) INVALID IF TRIG&gt;400 OR NON-FASTING SAMPLE.",null,null,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>labevent_id<\/th>\n      <th>subject_id<\/th>\n      <th>hadm_id<\/th>\n      <th>specimen_id<\/th>\n      <th>itemid<\/th>\n      <th>charttime<\/th>\n      <th>storetime<\/th>\n      <th>value<\/th>\n      <th>valuenum<\/th>\n      <th>valueuom<\/th>\n      <th>ref_range_lower<\/th>\n      <th>ref_range_upper<\/th>\n      <th>flag<\/th>\n      <th>priority<\/th>\n      <th>comments<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","scrollY":170,"scrollX":true,"scroller":true,"headerCallback":"function(thead) {\n  $(thead).css('font-size', '.75em');\n}","columnDefs":[{"className":"dt-right","targets":[0,1,2,3,4,8,10,11]}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[0]; $(this.api().cell(row, 0).node()).css({'font-size':'13px'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'13px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'13px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'13px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'13px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'13px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'13px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'13px'});\nvar value=data[8]; $(this.api().cell(row, 8).node()).css({'font-size':'13px'});\nvar value=data[9]; $(this.api().cell(row, 9).node()).css({'font-size':'13px'});\nvar value=data[10]; $(this.api().cell(row, 10).node()).css({'font-size':'13px'});\nvar value=data[11]; $(this.api().cell(row, 11).node()).css({'font-size':'13px'});\nvar value=data[12]; $(this.api().cell(row, 12).node()).css({'font-size':'13px'});\nvar value=data[13]; $(this.api().cell(row, 13).node()).css({'font-size':'13px'});\nvar value=data[14]; $(this.api().cell(row, 14).node()).css({'font-size':'13px'});\n}"}},"evals":["options.headerCallback","options.rowCallback"],"jsHooks":[]}</script>
+
+---
+class: inverse, center, middle
+
+# END
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "3508:2480",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
