@@ -4,9 +4,9 @@
     <title>Developement Environment Setting and   Project Management</title>
     <meta charset="utf-8" />
     <meta name="author" content="MinDong Sung, M.D." />
-    <script src="libs/header-attrs/header-attrs.js"></script>
-    <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/header-attrs-2.9/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -23,7 +23,7 @@ class: center, middle, inverse, title-slide
 # Disclosure
 - Main langauage - python, R, go
 
-- Using VS CODE, R studio.
+- Using Visual Studio code, R-Studio.
 
 - Using both Mac and Windows 
 
@@ -32,6 +32,38 @@ class: center, middle, inverse, title-slide
 - I own some stock in Microsoft.
 
 - 제가 하는 방식은 완벽하지 않으며, 반드시 이렇게 해야한다는 것은 아닙니다. 
+
+---
+class: center, middle
+
+# Development Environment
+
+---
+class: center, middle
+# Wireless Lan
+---
+# YUHS-external
+- 그룹웨어 ID / Password 이용해서 접속 가능
+---
+## Connect to Print(for Mac)
+1. 윈도우 프린트 공유가 필요하고 **공유 위치(ip)**와 **공유 프린트 이름**이 필요하다.
+    - IP: 10.19.12.58
+    - Printer Name: Kyocera FS-4025DN KX
+1. smb://[IP address of Printer]로 접속하여 인증을 한다. 
+1. 프린트 추가 - 고급
+    - 유형: windows printer via spoolss
+    - 기기: 다른기기
+    - URL: smb://10.19.12.58/Kyocera%20FS-4025DN%20KX
+        - 빈칸에 **%20**을 입력한다.
+    - 사용은 소프트웨어가 있으면 좋겠지만 없으면 일반 postscript 프린트로 설정
+
+&lt;img src="figure/connect_to_network_printer.png" width="30%" style="display: block; margin: auto;" /&gt;
+---
+## Connect to PC (feat. Microsoft Remote Desktop)
+&lt;img src="figure/RDP_setting.png" width="80%" style="display: block; margin: auto;" /&gt;
+---
+## Connect to PC (feat. Microsoft Remote Desktop)
+&lt;img src="figure/RDP_desktop.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 class: center, middle
