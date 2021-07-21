@@ -85,10 +85,7 @@ class: inverse, center, middle
 # Terminal (Windows)
 - putty? Terminal!
 - 이전에는 open ssh가 지원이 되지 않아서 putty가 필요했으나 최근에는 필요가 없음
-- 예시)
-```{bash, eval = FALSE}
-ssh mindong@103.22.220.153 -p10022
-```
+
 ---
 # WLS2 (Windows Subsystem Linux 2)
 * 윈도우 내에서 linux를 사용할 수 있습니다!!
@@ -121,13 +118,6 @@ export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/b
 alias phd="cd work/phd_thesis_2021; source env/bin/activate"
 alias mimic="cd work/mimiciv"
 alias wd='cd ~/work'
-
-## server
-alias 149ssh='ssh mindong@103.22.220.149 -p10022'
-alias 153ssh='ssh mindong@103.22.220.153 -p10022'
-alias 67ssh='ssh mindong@61.252.54.67 -p10022'
-alias 76ssh='ssh mindong@61.252.54.76 -p10022'
-alias 79ssh='ssh mindong@61.252.54.79 -p10022'
 
 ```
 
@@ -205,10 +195,10 @@ knitr::include_graphics('figure/tmux_cheatsheet.png')
 * 원격 접속 개발
   - ssh key 이용 시 password 없이 접속 가능 
   ```{bash eval = FALSE}
-  Host 103.22.220.153
-  	HostName 103.22.220.153
+  Host [HOSTNAME]
+  	HostName 123.123.123.123
   	User mindong
-  	Port 10022
+  	Port 22
   	IdentityFile ~/.ssh/id_rsa
   ```
 * 여러가지 단축키
