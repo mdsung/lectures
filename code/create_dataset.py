@@ -45,7 +45,7 @@ class Database:
         return self.cur.fetchall()
 
     def table_to_pandas(self, table_name: str) -> pd.DataFrame:
-        self.cur.execute(f"SELECT * FROM {table_name} LIMIT 10")
+        self.cur.execute(f"SELECT * FROM {table_name}")
         return pd.DataFrame(self.cur.fetchall())
 
 def save_to_pickle(df:pd.DataFrame, table_name:str):
@@ -55,7 +55,7 @@ def save_to_pickle(df:pd.DataFrame, table_name:str):
         
 def parse_table_and_save(table_name:str):
     database = Database()
-    df = database.table_to_pandas('apacheApsVar')
+    df = database.table_to_pandas(table_name)
     save_to_pickle(df, table_name)
     database.conn.close()
     
