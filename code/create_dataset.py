@@ -48,25 +48,31 @@ class Database:
         self.cur.execute(f"SELECT * FROM {table_name}")
         return pd.DataFrame(self.cur.fetchall())
 
-def save_to_pickle(df:pd.DataFrame, table_name:str):
+
+def save_to_pickle(df: pd.DataFrame, table_name: str):
     import pickle
-    with open(f'data/raw/{table_name}.pkl', 'wb') as f:
+
+    with open(f"data/raw/{table_name}.pkl", "wb") as f:
         pickle.dump(df, f)
 
-def save_to_csv(df:pd.DataFrame, table_name:str):
-    df.to_csv(f'data/raw/{table_name}.csv')
-        
-def parse_table_and_save(table_name:str):
+
+def save_to_csv(df: pd.DataFrame, table_name: str):
+    df.to_csv(f"data/raw/{table_name}.csv", index=False)
+
+
+def parse_table_and_save(table_name: str):
     database = Database()
     df = database.table_to_pandas(table_name)
     save_to_pickle(df, table_name)
     save_to_csv(df, table_name)
     database.conn.close()
-    
+
+
 if __name__ == "__main__":
     database = Database()
-    table_names = ['apacheApsVar', 'apachePatientResult', 'apachePredVar']
-    
+    table_names = ["apacheApsVar", "apachePatientResult", "apachePredVar"]
+
     import concurrent.futures
+
     with concurrent.futures.ProcessPoolExecutor() as executor:
         executor.map(parse_table_and_save, table_names)
