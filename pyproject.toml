@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "2022_ddl_4-10"
+version = "0.1.0"
+description = ""
+authors = ["MinDong <mdskylover@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.1"
+PyYAML = "^6.0"
+
+[tool.poetry.dev-dependencies]
+isort = "^5.10.1"
+black = "^22.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
