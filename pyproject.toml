@@ -5,15 +5,22 @@ description = ""
 authors = ["MinDong <mdskylover@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "~3.10"
 requests = "^2.28.1"
 PyYAML = "^6.0"
 pandas = "^1.4.3"
 torch = "^1.12.0"
+numpy = "^1.23.0"
+scipy = "1.8.1"
+sklearn = "^0.0"
+tqdm = "^4.64.0"
+plotly = "^5.9.0"
+kaleido = "0.2.1"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"
 black = "^22.6.0"
+pytest = "^7.1.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

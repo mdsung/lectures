@@ -68,3 +68,7 @@ if __name__ == "__main__":
 
     train_X, test_X = create_feature_tensor(data, n_train)
     train_y = create_label_tensor(train_df)
+
+    torch.save(train_X, "data/processed/train_X.pt")
+    torch.save(test_X, "data/processed/test_X.pt")
+    torch.save(train_y, "data/processed/train_y.pt")
