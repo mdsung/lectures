@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "20220329_python_lecture"
+version = "0.1.0"
+description = ""
+authors = ["MinDong <mdskylover@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.4.1"
+PyMySQL = "^1.0.2"
+python-dotenv = "^0.20.0"
+pandas-profiling = "^3.1.0"
+sklearn = "^0.0"
+statsmodels = "^0.13.2"
+seaborn = "^0.11.2"
+
+[tool.poetry.dev-dependencies]
+jupyter = "^1.0.0"
+black = "^22.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
